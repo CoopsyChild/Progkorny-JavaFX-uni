@@ -9,6 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.net.URL;
 
@@ -49,6 +53,25 @@ public class LoginController implements Initializable {
         }
     }
     public void validateLogin(String username, String password){
-        loginErrorMessageLabel.setText("Invalid Username or Password. Please try again!");
+        DatabaseConnection dbConnection = new DatabaseConnection();
+        Connection connection = dbConnection.getConnection();
+
+         try {
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT count(1) FROM user WHERE username=? AND password=?");
+             preparedStatement.setString(1,username);
+             preparedStatement.setString(2,password);
+             ResultSet queryResult = preparedStatement.executeQuery();
+
+             while (queryResult.next()){
+                 if (queryResult.getInt(1) == 1) {
+                     loginErrorMessageLabel.setText("Succes!");
+                 } else {
+                     loginErrorMessageLabel.setText("Invalid Username or Password. Please try again!");
+                 }
+             }
+         } catch (Exception e){
+             e.printStackTrace();
+             e.getCause();
+         }
     }
 }
