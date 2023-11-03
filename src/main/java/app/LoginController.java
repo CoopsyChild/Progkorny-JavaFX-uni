@@ -46,6 +46,7 @@ public class LoginController implements Initializable {
         stage.close();
     }
 
+    // TODO New Window Opener
     public void onSignUpLabelClick(){
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("register.fxml")));
@@ -53,7 +54,7 @@ public class LoginController implements Initializable {
             loginStage.initStyle(StageStyle.UNDECORATED);
             loginStage.setScene(new Scene(root,400, 500));
             loginStage.show();
-            ((Stage) cancelButton.getScene().getWindow()).close();
+            ((Stage) signUpLabel.getScene().getWindow()).close();
         } catch (Exception e){
             e.printStackTrace();
             e.getCause();
