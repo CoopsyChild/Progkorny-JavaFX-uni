@@ -42,7 +42,7 @@
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="cancelButton" layoutX="22.0" layoutY="308.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="32.0" prefWidth="249.0" style="-fx-background-color: #E96151;" text="Cancel">
+            <Button fx:id="cancelButton" layoutX="22.0" layoutY="311.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="32.0" prefWidth="249.0" style="-fx-background-color: #E96151;" text="Cancel">
                <font>
                   <Font size="13.0" />
                </font>
@@ -53,11 +53,11 @@
                </font>
             </Label>
             <PasswordField fx:id="passwordTextField" layoutX="88.0" layoutY="175.0" prefHeight="25.0" prefWidth="167.0" promptText="Password" />
-            <Label fx:id="signUpLabel" layoutX="47.0" layoutY="355.0" onMouseClicked="#onSignUpLabelClick" text="Sign Up," textFill="#1f40ff">
+            <Label fx:id="signUpLabel" layoutX="47.0" layoutY="358.0" onMouseClicked="#onSignUpLabelClick" text="Sign Up," textFill="#1f40ff">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Label>
-            <Label layoutX="93.0" layoutY="355.0" text="if you don't have an account." />
+            <Label layoutX="93.0" layoutY="358.0" text="if you don't have an account." />
          </children>
       </AnchorPane>
    </right>
