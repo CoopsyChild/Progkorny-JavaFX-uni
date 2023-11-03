@@ -21,7 +21,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <Button fx:id="loginButton" layoutX="76.0" layoutY="309.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="32.0" prefWidth="249.0" style="-fx-background-color: #E96151;" text="Register">
+            <Button fx:id="registerButton" layoutX="76.0" layoutY="309.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" prefHeight="32.0" prefWidth="249.0" style="-fx-background-color: #E96151;" text="Register">
                <font>
                   <Font size="13.0" />
                </font>
