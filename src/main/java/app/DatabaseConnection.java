@@ -13,7 +13,7 @@ public class DatabaseConnection {
         String url = "jdbc:mysql://localhost/" + dbName;
 
         try {
-            Class.forName("app.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             dbLink=DriverManager.getConnection(url,dbUser,dbPassword);
 
         } catch (Exception e){

@@ -56,6 +56,8 @@ public class LoginController implements Initializable {
         DatabaseConnection dbConnection = new DatabaseConnection();
         Connection connection = dbConnection.getConnection();
 
+        //TODO  Password hashing
+
          try {
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT count(1) FROM user WHERE username=? AND password=?");
              preparedStatement.setString(1,username);
