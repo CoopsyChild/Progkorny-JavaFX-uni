@@ -26,23 +26,23 @@
                   <Image url="C:\Users\ffark\Downloads\40868437.png" />
                </image>
             </ImageView>
-            <Label layoutX="22.0" layoutY="138.0" text="Username">
+            <Label layoutX="22.0" layoutY="138.0" text="Username" textFill="#e96151">
                <font>
                   <Font size="13.0" />
                </font>
             </Label>
             <TextField fx:id="usernameTextField" layoutX="88.0" layoutY="135.0" prefHeight="25.0" prefWidth="167.0" promptText="Username" />
-            <Label layoutX="23.0" layoutY="178.0" text="Password">
+            <Label layoutX="23.0" layoutY="178.0" text="Password" textFill="#e96151">
                <font>
                   <Font size="13.0" />
                </font>
             </Label>
-            <Button fx:id="loginButton" layoutX="22.0" layoutY="267.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="32.0" prefWidth="249.0" style="-fx-background-color: #E96151;" text="Login">
+            <Button fx:id="loginButton" layoutX="22.0" layoutY="267.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="32.0" prefWidth="249.0" style="-fx-background-color: #E96151;" text="Login" textFill="WHITE">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="cancelButton" layoutX="22.0" layoutY="311.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="32.0" prefWidth="249.0" style="-fx-background-color: #E96151;" text="Cancel">
+            <Button fx:id="cancelButton" layoutX="22.0" layoutY="311.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="32.0" prefWidth="249.0" style="-fx-background-color: #E96151;" text="Cancel" textFill="WHITE">
                <font>
                   <Font size="13.0" />
                </font>
