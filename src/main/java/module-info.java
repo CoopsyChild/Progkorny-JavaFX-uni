@@ -10,4 +10,6 @@ module com.example.progkornyjavafxuni {
 
     opens com.example.progkornyjavafxuni to javafx.fxml;
     exports com.example.progkornyjavafxuni;
+    exports app;
+    opens app to javafx.fxml;
 }
