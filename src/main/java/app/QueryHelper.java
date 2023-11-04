@@ -82,6 +82,93 @@ public final class QueryHelper {
         return null;
     }
 
+    public static List<String> selectDrinkCategoryNames(){
+        try {
+            Connection connection = dBconnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM drink_category");
+            List<String> categoryNames = new ArrayList<String>();
+            ResultSet queryResult = preparedStatement.executeQuery();
+            while (queryResult.next()){
+                String categoryName= queryResult.getString(1);
+                categoryNames.add(categoryName);
+            }
+            return categoryNames;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return null;
+    }
+
+    public static boolean isItemNumberExistsForUser(String itemNumber,Integer userId) {
+        try {
+            Connection connection = dBconnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT count(1) FROM drink_stock WHERE item_number=? AND owner_id=?");
+            preparedStatement.setString(1, itemNumber);
+            preparedStatement.setString(2, userId.toString());
+            ResultSet queryResult = preparedStatement.executeQuery();
+            queryResult.next();
+            return queryResult.getInt(1) > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return true;
+    }
+
+    public static boolean insertNewDrinkForUser(String itemNumber, String name, Float size, Integer price, Integer categoryId, Integer ownerId){
+        try {
+            Connection connection = dBconnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO drink_stock (item_number, name, size, price, category_id, owner_id) values (?,?,?,?,?,?)");
+            preparedStatement.setString(1,itemNumber);
+            preparedStatement.setString(2,name);
+            preparedStatement.setString(3,size.toString());
+            preparedStatement.setString(4,price.toString());
+            preparedStatement.setString(5,categoryId.toString());
+            preparedStatement.setString(6,ownerId.toString());
+            if(preparedStatement.executeUpdate()!=0) return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+        return false;
+    }
+
+    public static Integer selectDrinkCategoryIdByName(String name){
+        try {
+            Connection connection = dBconnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM drink_category WHERE name=?");
+            preparedStatement.setString(1,name);
+            ResultSet queryResult = preparedStatement.executeQuery();
+            if(queryResult.next()) {
+                return queryResult.getInt(1);
+            }
+            return null;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return null;
+    }
+    public static Boolean deleteDrinkById(Integer id){
+        try {
+            Connection connection = dBconnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM drink_stock WHERE id=?");
+            preparedStatement.setString(1,id.toString());
+            if(preparedStatement.executeUpdate()!=0){
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return false;
+    }
+
     public static List<Drink> selectUserDrinkStock(Integer id){
         try {
             Connection connection = dBconnection();
