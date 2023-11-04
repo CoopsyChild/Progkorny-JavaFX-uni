@@ -56,4 +56,24 @@ public final class QueryHelper {
         }
         return 0;
     }
+
+    public static String updateUserLastName(String currentUsername, Integer id, String newUsername) {
+        try {
+            Connection connection = dBconnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET last_name=? WHERE id=?");
+            preparedStatement.setString(1,newUsername);
+            preparedStatement.setString(2,id.toString());
+            if(preparedStatement.executeUpdate()>0){
+                return newUsername;
+            }
+            else {
+                return currentUsername;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return currentUsername;
+    }
 }
