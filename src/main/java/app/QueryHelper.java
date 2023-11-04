@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public final class Query {
-    private Query () { // private constructor
+public final class QueryHelper {
+    private QueryHelper() { // private constructor
     }
     public static Connection dBconnection(){
         DatabaseConnection dbConnection = new DatabaseConnection();

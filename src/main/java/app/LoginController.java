@@ -13,11 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.stage.StageStyle;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.net.URL;
@@ -76,11 +74,11 @@ public class LoginController implements Initializable {
         }
     }
     public void createUserSession(Integer userId){
-        User userData=Query.selectUserData(userId);
+        User userData= QueryHelper.selectUserData(userId);
         if (userData != null){
             UserSession.getInstance(userData.getUsername(), userData.getLastName() , userData.getRegistrationDate());
         }
-        
+
     }
     public void validateLogin(String username, String password){
         DatabaseConnection dbConnection = new DatabaseConnection();
@@ -96,7 +94,7 @@ public class LoginController implements Initializable {
 
              while (queryResult.next()){
                  if (queryResult.getInt(1) == 1) {
-                     createUserSession(Query.selectUserIdByUsername(username));
+                     createUserSession(QueryHelper.selectUserIdByUsername(username));
                  } else {
                      loginErrorMessageLabel.setText("Invalid Username or Password. Please try again!");
                  }
