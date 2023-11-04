@@ -2,18 +2,25 @@ package app;
 
 public final class UserSession {
     private static UserSession instance;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private Integer id;
     private String username;
     private String lastName;
     private String registrationDate;
 
-    public UserSession(String username, String lastName, String registrationDate) {
-        this.username = username;
-        this.lastName = lastName;
-        this.registrationDate = registrationDate;
+    private UserSession() {
     }
-    public static UserSession getInstance(String username, String lastName, String registrationDate) {
+    public static UserSession getInstance() {
         if(instance == null) {
-            instance = new UserSession(username, lastName, registrationDate);
+            UserSession.instance=new UserSession();
         }
         return instance;
     }
@@ -42,7 +49,7 @@ public final class UserSession {
         this.registrationDate = registrationDate;
     }
 
-    public void cleanUserSession() {
+    public void clearUserSession() {
         username = null;
         lastName = null;
         registrationDate = null;
