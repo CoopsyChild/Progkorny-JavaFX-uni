@@ -55,15 +55,19 @@ public class InsertDrinkController {
                     price = Integer.parseInt(priceTextField.getText());
                     Integer categoryId = QueryHelper.selectDrinkCategoryIdByName(categoryChoiceBox.getSelectionModel().getSelectedItem());
                     try {
-                        if(!QueryHelper.isItemNumberExistsForUser(itemNumberTextField.getText(),UserSession.getInstance().getId())) {
-                            if (QueryHelper.insertNewDrinkForUser(itemNumberTextField.getText(), drinkNameTextField.getText(), size, price, categoryId, UserSession.getInstance().getId())) {
-                                showInfoDialog("Item successfully added!", "Success.");
-                                ((Stage) cancelButton.getScene().getWindow()).close();
+                        if(size > 0 && price >= 0) {
+                            if (!QueryHelper.isItemNumberExistsForUser(itemNumberTextField.getText(), UserSession.getInstance().getId())) {
+                                if (QueryHelper.insertNewDrinkForUser(itemNumberTextField.getText(), drinkNameTextField.getText(), size, price, categoryId, UserSession.getInstance().getId())) {
+                                    showInfoDialog("Item successfully added!", "Success.");
+                                    ((Stage) cancelButton.getScene().getWindow()).close();
+                                } else {
+                                    showErrorDialog("Something went wrong while inserting into the database. Please try again!", "DB Error");
+                                }
                             } else {
-                                showErrorDialog("Something went wrong while inserting into the database. Please try again!", "DB Error");
+                                showErrorDialog("Item with this item number already exists. Please try again.", "Item number Error");
                             }
                         } else {
-                            showErrorDialog("Item with this item number already exists. Please try again.", "Item number Error");
+                            showErrorDialog("Size and Price should be greater than 0.", "Invalid value");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

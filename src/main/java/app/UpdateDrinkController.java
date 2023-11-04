@@ -51,15 +51,19 @@ public class UpdateDrinkController {
                     price = Integer.parseInt(priceTextField.getText());
                     Integer categoryId = QueryHelper.selectDrinkCategoryIdByName(categoryChoiceBox.getSelectionModel().getSelectedItem());
                     try {
-                        if(initialItemNumber.equals(itemNumberTextField.getText()) || !QueryHelper.isItemNumberExistsForUser(itemNumberTextField.getText(),UserSession.getInstance().getId())) {
-                            if (QueryHelper.updateDrinkForUser(itemId,itemNumberTextField.getText(), drinkNameTextField.getText(), size, price, categoryId)) {
-                                showInfoDialog("Item successfully updated!", "Success.");
-                                ((Stage) cancelButton.getScene().getWindow()).close();
+                        if(size > 0 && price >= 0) {
+                            if (initialItemNumber.equals(itemNumberTextField.getText()) || !QueryHelper.isItemNumberExistsForUser(itemNumberTextField.getText(), UserSession.getInstance().getId())) {
+                                if (QueryHelper.updateDrinkForUser(itemId, itemNumberTextField.getText(), drinkNameTextField.getText(), size, price, categoryId)) {
+                                    showInfoDialog("Item successfully updated!", "Success.");
+                                    ((Stage) cancelButton.getScene().getWindow()).close();
+                                } else {
+                                    showErrorDialog("Something went wrong while updating the item. Please try again!", "DB Error");
+                                }
                             } else {
-                                showErrorDialog("Something went wrong while updating the item. Please try again!", "DB Error");
+                                showErrorDialog("Item with this item number already exists (Original item number was: " + initialItemNumber + "). Please try again.", "Item number Error");
                             }
                         } else {
-                            showErrorDialog("Item with this item number already exists (Original item number was: "+initialItemNumber+"). Please try again.", "Item number Error");
+                            showErrorDialog("Size and Price should be greater than 0.", "Invalid value");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
