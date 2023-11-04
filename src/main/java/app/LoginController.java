@@ -75,8 +75,12 @@ public class LoginController implements Initializable {
             }
         }
     }
-    public void createUserSession(){
-
+    public void createUserSession(Integer userId){
+        User userData=Query.selectUserData(userId);
+        if (userData != null){
+            UserSession.getInstance(userData.getUsername(), userData.getLastName() , userData.getRegistrationDate());
+        }
+        
     }
     public void validateLogin(String username, String password){
         DatabaseConnection dbConnection = new DatabaseConnection();
@@ -92,7 +96,7 @@ public class LoginController implements Initializable {
 
              while (queryResult.next()){
                  if (queryResult.getInt(1) == 1) {
-                     loginErrorMessageLabel.setText("Succes!");
+                     createUserSession(Query.selectUserIdByUsername(username));
                  } else {
                      loginErrorMessageLabel.setText("Invalid Username or Password. Please try again!");
                  }

@@ -2,6 +2,8 @@ package app;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class DatabaseConnection {
     public Connection dbLink;
@@ -22,4 +24,5 @@ public class DatabaseConnection {
         }
         return dbLink;
     }
+
 }
