@@ -75,6 +75,9 @@ public class LoginController implements Initializable {
             }
         }
     }
+    public void createUserSession(){
+
+    }
     public void validateLogin(String username, String password){
         DatabaseConnection dbConnection = new DatabaseConnection();
         Connection connection = dbConnection.getConnection();
