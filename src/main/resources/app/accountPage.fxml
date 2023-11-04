@@ -18,11 +18,11 @@
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button layoutX="10.0" layoutY="162.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="157.0" style="-fx-background-color: #ff938b;" text="Button" textFill="#3c3c3c" AnchorPane.bottomAnchor="199.0">
+            <Button layoutX="10.0" layoutY="162.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="157.0" style="-fx-background-color: #ff938b;" text="Summary" textFill="#3c3c3c" AnchorPane.bottomAnchor="199.0">
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button layoutX="10.0" layoutY="112.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="157.0" style="-fx-background-color: #ff938b;" text="Button" textFill="#3c3c3c" AnchorPane.bottomAnchor="249.0">
+            <Button fx:id="stockButton" layoutX="10.0" layoutY="112.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="157.0" style="-fx-background-color: #ff938b;" text="Stock" textFill="#3c3c3c" AnchorPane.bottomAnchor="249.0">
                <font>
                   <Font size="14.0" />
                </font></Button>
@@ -81,7 +81,7 @@
                   <Label layoutX="243.0" layoutY="46.0" text="New Password:" />
                   <PasswordField fx:id="newPassConfirmField" layoutX="243.0" layoutY="110.0" />
                   <Label layoutX="243.0" layoutY="94.0" text="Confirm New Password:" />
-                  <Button fx:id="newPassSubmitButton" layoutX="243.0" layoutY="144.0" mnemonicParsing="false" style="-fx-background-color: #E96151;" text="Submit" textFill="WHITE" />
+                  <Button fx:id="newPassSubmitButton" layoutX="243.0" layoutY="144.0" mnemonicParsing="false" onAction="#onNewPassSubmitButton" style="-fx-background-color: #E96151;" text="Submit" textFill="WHITE" />
                   <Label layoutX="241.0" layoutY="187.0" text="Change Last Name:" textFill="#e96151">
                      <font>
                         <Font size="14.0" />
