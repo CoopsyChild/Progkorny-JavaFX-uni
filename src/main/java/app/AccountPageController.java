@@ -82,6 +82,20 @@ public class AccountPageController {
         }
     }
 
+    public void onStockButtonClick(){
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("stockPage.fxml")));
+            Stage loginStage = new Stage();
+            loginStage.initStyle(StageStyle.UNDECORATED);
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+            ((Stage) logoutButton.getScene().getWindow()).close();
+        } catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     public void onLogoutButtonClick(){
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));

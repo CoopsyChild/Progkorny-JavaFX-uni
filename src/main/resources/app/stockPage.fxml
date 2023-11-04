@@ -55,14 +55,14 @@
          <center>
             <AnchorPane prefHeight="320.0" prefWidth="631.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="drinkTable" prefHeight="320.0" prefWidth="553.0">
+                  <TableView fx:id="drinkTableView" prefHeight="320.0" prefWidth="553.0">
                     <columns>
-                      <TableColumn prefWidth="25.0" style="-fx-background-color: #ff938b;" text="ID" />
-                      <TableColumn prefWidth="114.0" text="Item Number" />
-                        <TableColumn prefWidth="168.0" text="Name" />
-                        <TableColumn minWidth="0.0" prefWidth="38.0" text="Size" />
-                        <TableColumn minWidth="0.0" prefWidth="94.0" text="Price" />
-                        <TableColumn minWidth="0.0" prefWidth="113.0" text="Category" />
+                      <TableColumn fx:id="id" prefWidth="25.0" style="-fx-background-color: #ff938b;" text="ID" />
+                      <TableColumn fx:id="itemNumber" prefWidth="114.0" text="Item Number" />
+                        <TableColumn fx:id="name" prefWidth="168.0" text="Name" />
+                        <TableColumn fx:id="size" minWidth="0.0" prefWidth="38.0" text="Size" />
+                        <TableColumn fx:id="price" minWidth="0.0" prefWidth="94.0" text="Price" />
+                        <TableColumn fx:id="category" minWidth="0.0" prefWidth="113.0" text="Category" />
                     </columns>
                   </TableView>
                   <Button layoutX="565.0" layoutY="47.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" style="-fx-background-color: #ff938b;" text="Insert New Item" textFill="WHITE">
