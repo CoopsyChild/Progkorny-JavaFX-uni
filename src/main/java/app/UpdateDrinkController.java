@@ -7,11 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.ChoiceBoxListCell;
-import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.stage.Stage;
 
-public class InsertDrinkController {
+public class UpdateDrinkController {
     @FXML
     private TextField drinkNameTextField;
     @FXML
@@ -24,11 +22,59 @@ public class InsertDrinkController {
     private Button cancelButton;
     @FXML
     private ChoiceBox<String> categoryChoiceBox;
+    private int itemId;
+    private String initialItemNumber;
     ObservableList<String> categories;
-
+    public void initDrinkData(Drink selectedDrink){
+        drinkNameTextField.setText(selectedDrink.getName());
+        sizeTextField.setText(selectedDrink.getSize().toString());
+        priceTextField.setText(selectedDrink.getPrice().toString());
+        itemNumberTextField.setText(selectedDrink.getItemNumber());
+        categoryChoiceBox.getSelectionModel().select(selectedDrink.getCategory());
+        itemId=selectedDrink.getId();
+        initialItemNumber=selectedDrink.getItemNumber();
+    }
     public void initialize(){
         categories = FXCollections.observableArrayList(QueryHelper.selectDrinkCategoryNames());
         categoryChoiceBox.setItems(categories);
+    }
+    public void onCancelButtonClick(){
+        ((Stage) cancelButton.getScene().getWindow()).close();
+    }
+    public void onUpdateButtonClick(){
+        if(!drinkNameTextField.getText().isBlank() && !sizeTextField.getText().isBlank() && !priceTextField.getText().isBlank() && !itemNumberTextField.getText().isBlank() && categoryChoiceBox.getSelectionModel().getSelectedItem() != null) {
+            float size;
+            int price;
+            if(QueryHelper.selectDrinkCategoryIdByName(categoryChoiceBox.getSelectionModel().getSelectedItem()) != null) {
+                try {
+                    size = Float.parseFloat(sizeTextField.getText());
+                    price = Integer.parseInt(priceTextField.getText());
+                    Integer categoryId = QueryHelper.selectDrinkCategoryIdByName(categoryChoiceBox.getSelectionModel().getSelectedItem());
+                    try {
+                        if(initialItemNumber.equals(itemNumberTextField.getText()) || !QueryHelper.isItemNumberExistsForUser(itemNumberTextField.getText(),UserSession.getInstance().getId())) {
+                            if (QueryHelper.updateDrinkForUser(itemId,itemNumberTextField.getText(), drinkNameTextField.getText(), size, price, categoryId)) {
+                                showInfoDialog("Item successfully updated!", "Success.");
+                                ((Stage) cancelButton.getScene().getWindow()).close();
+                            } else {
+                                showErrorDialog("Something went wrong while updating the item. Please try again!", "DB Error");
+                            }
+                        } else {
+                            showErrorDialog("Item with this item number already exists (Original item number was: "+initialItemNumber+"). Please try again.", "Item number Error");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        e.getCause();
+                        showErrorDialog("Something went wrong while updating the item. Please try again!", "DB Error");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    e.getCause();
+                    showErrorDialog("Invalid size or price value ", "Invalid value");
+                }
+            }
+        } else {
+            showErrorDialog("Empty Field(s)","Empty Fields Error");
+        }
     }
     public void showErrorDialog(String message, String title){
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -45,45 +91,4 @@ public class InsertDrinkController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    public void onInsertButtonClick(){
-        if(!drinkNameTextField.getText().isBlank() && !sizeTextField.getText().isBlank() && !priceTextField.getText().isBlank() && !itemNumberTextField.getText().isBlank() && categoryChoiceBox.getSelectionModel().getSelectedItem() != null) {
-            float size;
-            int price;
-            if(QueryHelper.selectDrinkCategoryIdByName(categoryChoiceBox.getSelectionModel().getSelectedItem()) != null) {
-                try {
-                    size = Float.parseFloat(sizeTextField.getText());
-                    price = Integer.parseInt(priceTextField.getText());
-                    Integer categoryId = QueryHelper.selectDrinkCategoryIdByName(categoryChoiceBox.getSelectionModel().getSelectedItem());
-                    try {
-                        if(!QueryHelper.isItemNumberExistsForUser(itemNumberTextField.getText(),UserSession.getInstance().getId())) {
-                            if (QueryHelper.insertNewDrinkForUser(itemNumberTextField.getText(), drinkNameTextField.getText(), size, price, categoryId, UserSession.getInstance().getId())) {
-                                showInfoDialog("Item successfully added!", "Success.");
-                                ((Stage) cancelButton.getScene().getWindow()).close();
-                            } else {
-                                showErrorDialog("Something went wrong while inserting into the database. Please try again!", "DB Error");
-                            }
-                        } else {
-                            showErrorDialog("Item with this item number already exists. Please try again.", "Item number Error");
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        e.getCause();
-                        showErrorDialog("Something went wrong while inserting into the database. Please try again!", "DB Error");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    e.getCause();
-                    showErrorDialog("Invalid size or price value ", "Invalid value");
-                }
-            }
-        } else {
-            showErrorDialog("Empty Field(s)","Empty Fields Error");
-        }
-    }
-
-    public void onCancelButtonClick(){
-        ((Stage) cancelButton.getScene().getWindow()).close();
-    }
-
-
 }

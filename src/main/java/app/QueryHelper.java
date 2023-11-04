@@ -134,6 +134,23 @@ public final class QueryHelper {
         }
         return false;
     }
+    public static boolean updateDrinkForUser(Integer itemId,String itemNumber, String name, Float size, Integer price, Integer categoryId){
+        try {
+            Connection connection = dBconnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE drink_stock SET item_number=?, name=?, size=?, price=?, category_id=? WHERE id=?");
+            preparedStatement.setString(1,itemNumber);
+            preparedStatement.setString(2,name);
+            preparedStatement.setString(3,size.toString());
+            preparedStatement.setString(4,price.toString());
+            preparedStatement.setString(5,categoryId.toString());
+            preparedStatement.setString(6,itemId.toString());
+            if(preparedStatement.executeUpdate()!=0) return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+        return false;
+    }
 
     public static Integer selectDrinkCategoryIdByName(String name){
         try {

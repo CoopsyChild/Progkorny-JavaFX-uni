@@ -100,12 +100,22 @@ public class StockPageController {
     public void onUpdateButtonClick(){
         if(drinkTableView.getSelectionModel().getSelectedItem() != null){
             try {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("updateDrink.fxml")));
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(Objects.requireNonNull(getClass().getResource("updateDrink.fxml")));
+                Parent root = loader.load();
+
+                // This passes the selected drink to the Update Item Scene
+                UpdateDrinkController controller = loader.getController();
+                controller.initDrinkData(drinkTableView.getSelectionModel().getSelectedItem());
+
                 Stage loginStage = new Stage();
                 loginStage.initStyle(StageStyle.UNDECORATED);
                 loginStage.initModality(Modality.APPLICATION_MODAL);
                 loginStage.setScene(new Scene(root));
+                windowPane.opacityProperty().setValue(0.4);
                 loginStage.showAndWait();
+                windowPane.opacityProperty().setValue(1);
+                initialize();
             } catch (Exception e){
                 e.printStackTrace();
                 e.getCause();
