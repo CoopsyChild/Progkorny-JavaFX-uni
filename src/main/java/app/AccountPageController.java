@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -24,6 +21,8 @@ public class AccountPageController {
     private Button newPassSubmitButton;
     @FXML
     private Button exitButton;
+    @FXML
+    private TextField newLastNameTextField;
     @FXML
     private Button logoutButton;
     @FXML
@@ -61,11 +60,26 @@ public class AccountPageController {
     }
 
     public void showInfoDialog(String message, String title){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void onNewLastNameSubmitButtonClick(){
+        if(!newLastNameTextField.getText().isBlank()) {
+            if(!QueryHelper.updateUserLastName(UserSession.getInstance().getLastName(), UserSession.getInstance().getId(), newLastNameTextField.getText()).equals(UserSession.getInstance().getLastName())) {
+                showInfoDialog("Last name successfully changed!","Success!");
+                UserSession.getInstance().setLastName(newLastNameTextField.getText());
+                lastNameLabel.setText(UserSession.getInstance().getLastName());
+                newLastNameTextField.setText("");
+            } else {
+                showErrorDialog("Something went wrong or the new last name that you given is the same as before","Error");
+            }
+        } else {
+            showErrorDialog("Name field is empty!","Empty Field");
+        }
     }
 
     public void onLogoutButtonClick(){
