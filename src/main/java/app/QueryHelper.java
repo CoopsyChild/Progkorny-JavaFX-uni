@@ -28,8 +28,7 @@ public final class QueryHelper {
     }
     public static User selectUserData(Integer id){
         try {
-            DatabaseConnection dbConnection = new DatabaseConnection();
-            Connection connection = dbConnection.getConnection();
+            Connection connection = dBconnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, username, password, registration_date, last_name FROM user WHERE id=?");
             preparedStatement.setString(1,id.toString());
             ResultSet queryResult = preparedStatement.executeQuery();
@@ -41,5 +40,20 @@ public final class QueryHelper {
             e.getCause();
         }
         return null;
+    }
+
+    public static Integer updateUserPassword(Integer id, String newPassword){
+        try {
+            Connection connection = dBconnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET password=? WHERE id=?");
+            preparedStatement.setString(1,newPassword);
+            preparedStatement.setString(2,id.toString());
+            return preparedStatement.executeUpdate();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return 0;
     }
 }
