@@ -76,17 +76,20 @@ public class LoginController implements Initializable {
     public void createUserSession(Integer userId){
         User userData= QueryHelper.selectUserData(userId);
         if (userData != null){
-            UserSession.getInstance(userData.getUsername(), userData.getLastName() , userData.getRegistrationDate());
+            var session = UserSession.getInstance();
+            session.setId(userId);
+            session.setLastName(userData.getLastName());
+            session.setUsername(userData.getUsername());
+            session.setRegistrationDate(userData.getRegistrationDate());
         }
 
     }
     public void validateLogin(String username, String password){
-        DatabaseConnection dbConnection = new DatabaseConnection();
-        Connection connection = dbConnection.getConnection();
-
         //TODO  Password hashing
 
          try {
+             DatabaseConnection dbConnection = new DatabaseConnection();
+             Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT count(1) FROM user WHERE username=? AND password=?");
              preparedStatement.setString(1,username);
              preparedStatement.setString(2,password);
@@ -95,6 +98,18 @@ public class LoginController implements Initializable {
              while (queryResult.next()){
                  if (queryResult.getInt(1) == 1) {
                      createUserSession(QueryHelper.selectUserIdByUsername(username));
+                     try {
+                         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("accountPage.fxml")));
+                         Stage loginStage = new Stage();
+                         loginStage.initStyle(StageStyle.UNDECORATED);
+                         loginStage.setScene(new Scene(root));
+                         loginStage.show();
+                         ((Stage) cancelButton.getScene().getWindow()).close();
+                     } catch (Exception e){
+                         e.printStackTrace();
+                         e.getCause();
+                         loginErrorMessageLabel.setText("Application crashed");
+                     }
                  } else {
                      loginErrorMessageLabel.setText("Invalid Username or Password. Please try again!");
                  }
@@ -102,6 +117,7 @@ public class LoginController implements Initializable {
          } catch (Exception e){
              e.printStackTrace();
              e.getCause();
+             loginErrorMessageLabel.setText("Database connection failed.");
          }
     }
 }
