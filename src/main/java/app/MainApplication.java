@@ -15,6 +15,7 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 520, 400);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
+
         stage.show();
     }
 
